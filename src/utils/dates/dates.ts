@@ -1,6 +1,6 @@
 import { IDay } from "../../types/IDay";
 
-export const getWeekByDate = (date = new Date()): IDay[] => {
+export const getWeekByDate = (date: Date): IDay[] => {
   return Array(7)
   .fill(new Date(date))
   .map((el, idx) => {
@@ -12,32 +12,19 @@ export const getWeekByDate = (date = new Date()): IDay[] => {
   });
 };
 
-export const hours = [
-  "00:00",
-  "01:00",
-  "02:00",
-  "03:00",
-  "04:00",
-  "05:00",
-  "06:00",
-  "07:00",
-  "08:00",
-  "09:00",
-  "10:00",
-  "11:00",
-  "12:00",
-  "13:00",
-  "14:00",
-  "15:00",
-  "16:00",
-  "17:00",
-  "18:00",
-  "19:00",
-  "20:00",
-  "21:00",
-  "22:00",
-  "23:00",
-];
+export const getHours = (date: Date): number[] => {
+  date.setMinutes(0);
+  date.setHours(0);
+  return Array(24)
+  .fill(new Date(date))
+  .map((el: Date, idx) => {
+    return new Date(el.getTime()).setHours(idx);
+  });
+};
+
+export const padTo2Digits = (num: number) => {
+  return num.toString().padStart(2, "0");
+};
 
 export const weekNames = ["m", "t", "w", "t", "f", "s", "s"];
 
