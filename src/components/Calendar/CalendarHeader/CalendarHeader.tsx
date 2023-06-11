@@ -6,6 +6,11 @@ import { BsPlusLg } from "react-icons/bs";
 import { useAppSelector, useAppDispatch } from "../../../hooks/redux";
 import { calendarSlice } from "../../../store/reducers/calendar";
 
+const StyledHeader = styled.header`
+  padding: 25px 0;
+  overflow: hidden;
+`;
+
 const StyledButton = styled.button`
   background: none;
   border: none;
@@ -25,7 +30,7 @@ const CalendarHeader: FC = () => {
   };
 
   return (
-    <header>
+    <StyledHeader>
       <Container>
         <Row>
           <StyledTitle>Interview Calendar</StyledTitle>
@@ -34,7 +39,7 @@ const CalendarHeader: FC = () => {
           </StyledButton>
         </Row>
       </Container>
-    </header>
+    </StyledHeader>
   );
 };
 

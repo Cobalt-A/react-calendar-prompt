@@ -16,7 +16,7 @@ const initialState: CalendarState = {
   date: new Date().getTime(),
   hours: getHours(new Date()),
   focusEvent: 0,
-  events: [],
+  events: JSON.parse(String(localStorage.getItem("events"))) || [],
   isShowDelete: false,
 };
 
@@ -31,6 +31,7 @@ export const calendarSlice = createSlice({
     },
     setEvents: (state, action: PayloadAction<number[]>) => {
       state.events = action.payload;
+      localStorage.setItem("events", JSON.stringify(action.payload));
     },
     setFocusEvent: (state, action: PayloadAction<number>) => {
       state.focusEvent = action.payload;

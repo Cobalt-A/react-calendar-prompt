@@ -17,13 +17,14 @@ const StyledContent = styled.div`
   background-color: #f6f6f6;
   border-top: 1px solid #e5e5e5;
   padding: 15px 0;
+  height: 60px;
 `;
 
 const CalendarBottomMenu: FC = () => {
   const { isShowDelete, events, focusEvent } = useAppSelector(
     (state) => state.calendarReducer
   );
-  const { setEvents, setShowDelete } = calendarSlice.actions;
+  const { setEvents, setShowDelete, setDate } = calendarSlice.actions;
   const dispatch = useAppDispatch();
 
   const deleteClickHandler = (): void => {
@@ -32,11 +33,15 @@ const CalendarBottomMenu: FC = () => {
     dispatch(setShowDelete(false));
   };
 
+  const todayClickHandler = (): void => {
+    dispatch(setDate(new Date().getTime()));
+  };
+
   return (
     <StyledContent>
       <Container>
         <Row>
-          <StyledButton>Today</StyledButton>
+          <StyledButton onClick={todayClickHandler}>Today</StyledButton>
           {isShowDelete && (
             <StyledButton onClick={deleteClickHandler}>Delete</StyledButton>
           )}

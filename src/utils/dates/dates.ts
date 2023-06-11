@@ -4,6 +4,7 @@ export const getWeekByDate = (date: Date): IDay[] => {
   return Array(7)
   .fill(new Date(date))
   .map((el, idx) => {
+    el.setHours(-24);
     const day = new Date(el.setDate(el.getDate() - el.getDay() + idx + 1));
     if (day.getDate() === new Date().getDate()) {
       return { isCurrentDay: true, day: day.getTime() };
@@ -14,6 +15,8 @@ export const getWeekByDate = (date: Date): IDay[] => {
 
 export const getHours = (date: Date): number[] => {
   date.setMinutes(0);
+  date.setSeconds(0);
+  date.setMilliseconds(0);
   date.setHours(0);
   return Array(24)
   .fill(new Date(date))
@@ -26,7 +29,7 @@ export const padTo2Digits = (num: number) => {
   return num.toString().padStart(2, "0");
 };
 
-export const weekNames = ["m", "t", "w", "t", "f", "s", "s"];
+export const weekNames = ["M", "T", "W", "T", "F", "S", "S"];
 
 export const monthsNames = [
   "January",

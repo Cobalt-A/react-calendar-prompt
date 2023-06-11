@@ -5,29 +5,47 @@ import styled from "styled-components";
 import { weekNames, monthsNames } from "../../../utils/dates/dates";
 import { useAppSelector, useAppDispatch } from "../../../hooks/redux";
 import { calendarSlice } from "../../../store/reducers/calendar";
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+import { TfiAngleRight, TfiAngleLeft } from "react-icons/tfi";
 
 const StyledContent = styled.div`
-  margin-left: 45px;
+  margin-left: 10%;
 `;
 
 const StyledDay = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px 25px;
+  padding: 10px 0;
 `;
 
 const StyledColumn = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 10px 0;
 `;
 
-const StyledBackgroud = styled.div`
+const StyledBackground = styled.div`
   background-color: #f6f6f6;
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
+`;
+
+interface StyledSpanProps {
+  active: string;
+}
+
+const StyledBlock = styled.div<StyledSpanProps>`
+  background-color: ${(props) => (props.active === "true" ? `#dc3434` : `inherit`)};
+  border-radius: 100%;
+  color: ${(props) => (props.active === "true" ? `#fff` : `#000`)};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 25px;
+  width: 25px;
+  padding: 5px;
 `;
 
 const CalendarWeeks: FC = () => {
@@ -44,21 +62,23 @@ const CalendarWeeks: FC = () => {
   };
 
   return (
-    <StyledBackgroud>
+    <StyledBackground>
       <Container>
         <StyledContent>
           <Row>
             {week.map((day, index) => (
               <StyledDay key={index}>
                 <span>{weekNames[index]}</span>
-                <span>{new Date(day.day).getDate()}</span>
+                <StyledBlock active={String(day.isCurrentDay)}>
+                  <span>{new Date(day.day).getDate()}</span>
+                </StyledBlock>
               </StyledDay>
             ))}
           </Row>
           <Row>
             <StyledColumn>
               <button onClick={prevClickHandler}>
-                <FaAngleLeft color="#dc3434" size={25} />
+                <TfiAngleLeft color="#dc3434" size={15} strokeWidth={2} />
               </button>
             </StyledColumn>
             <StyledColumn>
@@ -69,13 +89,13 @@ const CalendarWeeks: FC = () => {
             </StyledColumn>
             <StyledColumn>
               <button onClick={nextClickHandler}>
-                <FaAngleRight color="#dc3434" size={25} />
+                <TfiAngleRight color="#dc3434" size={15} strokeWidth={2} />
               </button>
             </StyledColumn>
           </Row>
         </StyledContent>
       </Container>
-    </StyledBackgroud>
+    </StyledBackground>
   );
 };
 

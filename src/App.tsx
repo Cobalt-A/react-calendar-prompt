@@ -1,16 +1,24 @@
 import React, { FC } from "react";
 import Layout from "./layout/Layout";
 import Calendar from "./pages/Calendar";
-import styled, { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
   body {
     font-family: Arial, Helvetica, sans-serif;
+    min-width: 320px;
+    overflow-x: hidden;
+    margin-bottom: 60px;
   }
   button {
     border: none;
     background: none;
     cursor: pointer;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 `;
 

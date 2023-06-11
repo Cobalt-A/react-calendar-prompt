@@ -3,26 +3,30 @@ import styled from "styled-components";
 import { useAppSelector, useAppDispatch } from "../../hooks/redux";
 import { calendarSlice } from "../../store/reducers/calendar";
 
-const StyledTD = styled.td`
+const StyledTableItem = styled.div`
   border: 1px solid #e5e5e5;
   width: inherit;
   height: inherit;
+  width: calc(100% / 7);
 `;
 
 interface StyledItemProps {
-  isActive: boolean;
+  active: string;
 }
 
 const StyledItem = styled.div<StyledItemProps>`
-  background-color: ${(props) => (props.isActive ? `#ebebfe` : `#fff`)};
-  height: 100%;
+  background-color: ${(props) => (props.active === "true" ? `#ebebfe` : `#fff`)};
+  aspect-ratio: 1/1;
+  border: 2px solid white;
   transition: 0.3s;
   cursor: pointer;
   &:hover {
-    background-color: ${(props) => (props.isActive ? `#ebebfe` : `#ebebfe84`)};
+    background-color: ${(props) =>
+      props.active === "true" ? `#ebebfe` : `#ebebfe6b`};
   }
   &:focus {
-    background-color: ${(props) => (props.isActive ? `#ebebfe` : `#ebebfe84`)};
+    background-color: ${(props) =>
+      props.active === "true" ? `#ebebfe` : `#ebebfe6b`};
   }
 `;
 
@@ -42,14 +46,14 @@ const TableItem: FC<TableItemProps> = ({ id }) => {
   };
 
   return (
-    <StyledTD>
+    <StyledTableItem>
       <StyledItem
-        isActive={isActive}
+        active={String(isActive)}
         onClick={clickHandler}
         data-id={id}
         tabIndex={0}
       ></StyledItem>
-    </StyledTD>
+    </StyledTableItem>
   );
 };
 
