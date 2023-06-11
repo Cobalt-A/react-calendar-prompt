@@ -35,6 +35,15 @@ const StyledTimeItem = styled.div`
   color: rgb(185, 185, 185);
 `;
 
+const StyledTimeColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 60px;
+  padding-top: 48px;
+  padding-bottom: 48px;
+`;
+
 const CalendarTimeTable: FC = () => {
   const { week } = useAppSelector((state) => state.calendarReducer);
   const hours = getHours();
@@ -42,20 +51,26 @@ const CalendarTimeTable: FC = () => {
   return (
     <StyledSection>
       <Container>
-        <StyledTable>
-          {hours.map((hour) => (
-            <Row key={hour}>
-              <StyledTimeItem>{padTo2Digits(hour)}:00</StyledTimeItem>
-              <StyledOverflow>
-                <StyledTableRow>
-                  {week.map((day, i) => (
-                    <TableItem day={day.day} hour={hour} key={i} />
-                  ))}
-                </StyledTableRow>
-              </StyledOverflow>
-            </Row>
-          ))}
-        </StyledTable>
+        <Row>
+          <StyledTimeColumn>
+            {hours.slice(1, hours.length).map((hour) => (
+              <StyledTimeItem key={hour}>{padTo2Digits(hour)}:00</StyledTimeItem>
+            ))}
+          </StyledTimeColumn>
+          <StyledTable>
+            {hours.map((hour) => (
+              <Row key={hour}>
+                <StyledOverflow>
+                  <StyledTableRow>
+                    {week.map((day, i) => (
+                      <TableItem day={day.day} hour={hour} key={i} />
+                    ))}
+                  </StyledTableRow>
+                </StyledOverflow>
+              </Row>
+            ))}
+          </StyledTable>
+        </Row>
       </Container>
     </StyledSection>
   );
