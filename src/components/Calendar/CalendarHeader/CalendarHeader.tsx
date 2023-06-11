@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { BsPlusLg } from "react-icons/bs";
 import { useAppSelector, useAppDispatch } from "../../../hooks/redux";
 import { calendarSlice } from "../../../store/reducers/calendar";
+import { getHourId } from "../../../utils/dates/dates";
 
 const StyledHeader = styled.header`
   padding: 25px 0;
@@ -22,11 +23,19 @@ const StyledTitle = styled.h1`
 `;
 
 const CalendarHeader: FC = () => {
-  const { focusEvent, events } = useAppSelector((state) => state.calendarReducer);
+  const { events } = useAppSelector((state) => state.calendarReducer);
   const { setEvents } = calendarSlice.actions;
   const dispatch = useAppDispatch();
+
   const clickHandler = (): void => {
-    dispatch(setEvents([focusEvent, ...events]));
+    const data = prompt(
+      "Enter event time: YYYY-MM-DD HH:mm:ss",
+      "2023-06-05 05:00:00"
+    );
+    const date = data ? new Date(data) : new Date();
+    if (events.find((eventId) => eventId === getHourId(date, date.getHours())))
+      return;
+    dispatch(setEvents([getHourId(date, date.getHours()), ...events]));
   };
 
   return (

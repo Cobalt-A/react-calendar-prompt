@@ -2,6 +2,7 @@ import React, { FC, MouseEvent } from "react";
 import styled from "styled-components";
 import { useAppSelector, useAppDispatch } from "../../hooks/redux";
 import { calendarSlice } from "../../store/reducers/calendar";
+import { getHourId } from "../../utils/dates/dates";
 
 const StyledTableItem = styled.div`
   border: 1px solid #e5e5e5;
@@ -21,20 +22,20 @@ const StyledItem = styled.div<StyledItemProps>`
   transition: 0.3s;
   cursor: pointer;
   &:hover {
-    background-color: ${(props) =>
-      props.active === "true" ? `#ebebfe` : `#ebebfe6b`};
+    background-color: rgb(178, 182, 253);
   }
   &:focus {
-    background-color: ${(props) =>
-      props.active === "true" ? `#ebebfe` : `#ebebfe6b`};
+    background-color: rgb(178, 182, 253);
   }
 `;
 
 interface TableItemProps {
-  id: number;
+  day: number;
+  hour: number;
 }
 
-const TableItem: FC<TableItemProps> = ({ id }) => {
+const TableItem: FC<TableItemProps> = ({ day, hour }) => {
+  const id = getHourId(new Date(day), hour);
   const dispatch = useAppDispatch();
   const { setFocusEvent, setShowDelete } = calendarSlice.actions;
   const { events } = useAppSelector((state) => state.calendarReducer);
@@ -52,7 +53,7 @@ const TableItem: FC<TableItemProps> = ({ id }) => {
         onClick={clickHandler}
         data-id={id}
         tabIndex={0}
-      ></StyledItem>
+      />
     </StyledTableItem>
   );
 };
