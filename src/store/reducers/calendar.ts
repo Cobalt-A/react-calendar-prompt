@@ -5,7 +5,7 @@ import { IDay } from "../../types/IDay";
 interface CalendarState {
   week: IDay[];
   date: number;
-  focusEvent: number;
+  focusEvent: number | null;
   events: number[];
   isShowDelete: boolean;
 }
@@ -13,7 +13,7 @@ interface CalendarState {
 const initialState: CalendarState = {
   week: getWeekByDate(new Date()),
   date: new Date().getTime(),
-  focusEvent: 0,
+  focusEvent: null,
   events: JSON.parse(String(localStorage.getItem("events"))) || [],
   isShowDelete: false,
 };
@@ -30,7 +30,7 @@ export const calendarSlice = createSlice({
       state.events = action.payload;
       localStorage.setItem("events", JSON.stringify(action.payload));
     },
-    setFocusEvent: (state, action: PayloadAction<number>) => {
+    setFocusEvent: (state, action: PayloadAction<number | null>) => {
       state.focusEvent = action.payload;
     },
     setShowDelete: (state, action: PayloadAction<boolean>) => {
